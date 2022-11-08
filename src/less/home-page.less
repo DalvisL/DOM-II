@@ -111,4 +111,62 @@
       }
     }
   }
+
+  
+  .modal {
+    display: flex;
+    position: fixed;
+    height: 50vh;
+    width: 800px;
+    border: dashed @eastern-blue 5px;
+    background-position: center;
+    background-image: url(https://images.unsplash.com/photo-1520208422220-d12a3c588e6c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80);
+    text-align:center;
+    margin-top: 25vh;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+      @media @mobile {
+        max-width: 100%;
+      }
+
+  }
+  .modal p {
+    text-align: center;
+    font-family: 'indie flower';
+    line-height: .5;
+    font-size: 3rem;
+    border-bottom: solid @eastern-blue 5px;
+    margin: 2% 0;
+  }
+  .modal div {
+    height: 50%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  .modal input{
+    width: 50%;
+    text-align: center;
+    height: 17.5%;
+    color: @eastern-blue;
+    border:solid @eastern-blue;
+    border-radius: 5px;
+  }
+  .modal button {
+    height: 17.5%;
+    width: 10%;
+    color: white;
+    background-color: @eastern-blue;
+    font-family: 'indie flower';
+    border:solid white;
+    border-radius: 5px;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }  
+  .off {
+    display: none;
+  }
+  
 }// home
