@@ -1,33 +1,45 @@
 import './less/index.less'
 
 // Your code goes here!
-// elements
+
 const signUp = document.querySelectorAll(".destination .btn");
 const headerIntro = document.querySelector('.intro');
+const header = document.querySelector('header');
+const body = document.querySelector('body');
 const modal = document.createElement('div');
 
 
+const modalDefault =  `
+<p>Join Us For 15% Off Expeditions!</p>
+<div>    
+    <input name='email' type='email' placeholder='Email class='input'/>
+    <button type='button'>Submit</button>
+</div>
+`
 modal.classList.add('modal','off');
-modal.innerHTML = 
-   `
-    <p>Join Us For 15% Off Expeditions!</p>
-    <div>    
-        <input name='email' type='email' placeholder='Email'/>
-        <button type='button'>Submit</button>
-    </div>
-    `
-    ;
+modal.innerHTML = modalDefault;
 headerIntro.before(modal);
 
 // bring up modal when sign me up! button is clicked
 Array.from(signUp).forEach( el => {
     el.addEventListener('click', function() {
         modal.classList.remove('off');
+        modal.innerHTML = modalDefault;
         }
     )
 })
 
-// make sticky nav smaller using wheel down, make it normal size on wheel up
+// make nav transparent if scroll goes past a certain amount, also make sticky nav shrink
+
+window.addEventListener('wheel', function(evt) {
+    if(this.scrollY > 60) {
+        header.style.backgroundColor = 'rgba(256, 256, 256, 0.8)';
+        header.classList.add('shrink');
+    } else if(this.scrollY < 60) {
+        header.style.backgroundColor = 'white';
+        header.classList.remove('shrink');
+    }
+})
 
 // double click h1 for easter egg
 const h1 = document.querySelector('h1');
@@ -36,12 +48,11 @@ h1.addEventListener('dblclick', evt => {
     if(h1.textContent !== 'Fun Boat') {
         h1.textContent = 'Fun Boat';
         document.querySelector('h2').textContent = 'Welcome To Fun Boat!';
-        document.querySelector('header img').src = '/Img/hallstatt-g75c3f509e_1280.jpg'
+        document.querySelector('header img').src = 'http://localhost:9000/img/destination.jpg';
     } else {
         h1.textContent = 'Fun Bus';
         document.querySelector('h2').textContent = 'Welcome To Fun Bus!';
-        document.querySelector('header img').src = 'http://localhost:9000/img/fun-bus.jpg'
-        console.log(document.querySelector('header img').height)
+        document.querySelector('header img').src = 'http://localhost:9000/img/fun-bus.jpg';
     }
 })
 
@@ -53,12 +64,50 @@ function escKey(evt) {
 }
 document.addEventListener('keydown', escKey);
 
-// onload alert user to sign up for 15% off expedition pricing
+// on load alert user to sign up for 15% off expedition pricing
+window.addEventListener('load', function(evt) {
+    modal.innerHTML = `
+    <p style= "color: rgba()">Welcome to ${h1.textContent}, Please Join Us!</p>
+    <div>    
+        <input name='email' type='email' placeholder='Email' class = 'input'/>
+        <button type='button'>Submit</button>
+    </div>
+    `
+    modal.classList.remove('off');
 
-// onpaste event preventdefault then alert, "PASTING NOT ALLOWED"
+})
 
-// Mouseout on body alert "wait, before you go: enjoy a 15% off code on us!", random number generator, and then push number to array of accepted codes.
-
-// onMouseOver images in main content blur and then show pricing for expedition.
-
-// animation start and animation end events
+// on paste event alert and preventDefault
+modal.addEventListener('paste', function(evt) {
+    alert("Please Type Your Email \nPasting is Not Allowed");
+    evt.preventDefault();
+})
+// Mouseout on body alert 
+let count = 0;
+body.addEventListener('mouseleave', function(evt) {
+    count++
+    if(count <=  1 ) {
+    modal.classList.remove('off');
+    modal.innerHTML = `
+    <p style= "color: rgba()">Wait! While We Have Your Attention</p>
+    <div>    
+        <input name='email' type='email' placeholder='Email' class='input'/>
+        <button type='button'>Submit</button>
+    </div>
+    `
+    }
+})
+// cancel copy on entire window
+window.addEventListener('copy', function(evt) {
+   const selection = document.getSelection();
+   evt.preventDefault();
+})
+// cancel context menu on modal
+modal.addEventListener('contextmenu', evt => {
+    evt.preventDefault();
+    console.log('context menu prevented');
+})
+// pointer cursor on mouseover h1;
+h1.addEventListener('mouseover', evt => {
+    h1.style.cursor = 'pointer';
+})
